@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddTransaction">
+
+    <EditText
+        android:id="@+id/editTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:hint="Title"
+        android:gravity="top"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/editAmount"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:hint="Amount"
+        android:gravity="top"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/editCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:gravity="top"
+        android:hint="Income/Expense"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/editNote"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:gravity="top"
+        android:hint="Note"
+        android:textSize="14dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD TRANSACTION" />
+</LinearLayout>
