@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.agenda_compose.ui.theme.Agenda_ComposeTheme
 import com.example.agenda_compose.views.ContactList
 import com.example.agenda_compose.views.SaveContact
@@ -29,8 +30,11 @@ class MainActivity : ComponentActivity() {
                     composable("SaveContact") {
                         SaveContact(navController)
                     }
-                    composable("UpdateContact/(uid)") {
-                        UpdateContact(navController)
+                    composable(
+                        "UpdateContact/{uid}",
+                        arguments = listOf(navArgument("uid"){}) //arguments e tipo o PutExtra para passar info de uma tela para outra
+                    ) {
+                        UpdateContact(navController, it.arguments?.getString("uid").toString())
                     }
                 }
            //}

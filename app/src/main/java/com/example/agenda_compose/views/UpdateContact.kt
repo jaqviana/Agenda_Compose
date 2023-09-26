@@ -31,7 +31,7 @@ import com.example.agenda_compose.ui.theme.WHITE
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun UpdateContact(navController: NavController){
+fun UpdateContact(navController: NavController, uid: String){
     var firstName by remember {
         mutableStateOf("")
     }
@@ -136,21 +136,16 @@ fun UpdateContact(navController: NavController){
             ButtonCustom(
                 onClick = {
                     if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
-                        println("Fill in all fields")
+
                     }else{
-                        println("User saved")
+
 
                     }
                 },
-                text = "Save"
+                text = "Update"
             )
 
         }
     }
-}
-@Preview
-@Composable
-private fun UpdateContactPreview(){
-    UpdateContact(navController = rememberNavController())
 }
 
