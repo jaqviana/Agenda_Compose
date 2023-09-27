@@ -1,34 +1,36 @@
 package com.example.agenda_compose.itemlist
 
+import android.app.AlertDialog
 import android.content.Context
-import androidx.compose.foundation.BorderStroke
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.Colors
-import androidx.compose.material.Shapes
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import com.example.agenda_compose.AppDatabase
 import com.example.agenda_compose.R
+import com.example.agenda_compose.dao.ContactDao
 import com.example.agenda_compose.model.Contact
 import com.example.agenda_compose.ui.theme.ShapeCardView
 import com.example.agenda_compose.ui.theme.WHITE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+private lateinit var contactDao: ContactDao
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ItemContact(
@@ -37,6 +39,8 @@ fun ItemContact(
     listContact: MutableList<Contact>,
     context: Context
 ) {
+    val scope = rememberCoroutineScope()
+
     //recebendio a lista de contatos atraves da posicao
     val firstname = listContact[position].firstName
     val lastname = listContact[position].lastName
@@ -44,7 +48,31 @@ fun ItemContact(
     val phone = listContact[position].phone
     val uid = listContact[position].uid
 
+    val contact = listContact[position]
 
+    fun alertDialogDeleteContact() {
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.setTitle("Are you sure you want to delete this contact?")
+           // .setMessage("Are you sure?")
+        alertDialog.setPositiveButton("Ok") { _, _ -> //definindo nenhum parametro
+            scope.launch(Dispatchers.IO){
+                contactDao = AppDatabase.getInstance(context).contactDao()
+                contactDao.delete(uid)
+                listContact.remove(contact)
+            }
+
+            scope.launch(Dispatchers.Main) {
+                navController.navigate("ContactList")//toda vez q navego consigo atualizar tela
+                Toast.makeText(context, "Contact removed successfully", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        alertDialog.setNegativeButton("Cancel") {_,_ ->
+
+        }
+        alertDialog.show()
+
+    }
 
     Card(
         backgroundColor = WHITE,
@@ -99,7 +127,7 @@ fun ItemContact(
             //img nao tem propriedade de click entao preciso definir um botao e entao colocar uma img
             Button(
                 onClick = {
-                    navController.navigate("UpdateContact/$uid")
+                    navController.navigate("UpdateContact/${uid}")
                 },
                 modifier = Modifier.constrainAs(btnUpdate){
                     end.linkTo(parent.end, margin = 5.dp)
@@ -121,6 +149,7 @@ fun ItemContact(
 
             Button(
                 onClick = {
+                          alertDialogDeleteContact()
 
                 },
                 modifier = Modifier.constrainAs(btnDelete){
