@@ -2,11 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/App_tracker" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/BMICalculator_Compose" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ChatCompose" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/MeOne" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/NotesCompose" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/TaskBeats" vcs="Git" />
   </component>
 </project>
